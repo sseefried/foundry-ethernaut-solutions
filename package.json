@@ -1,0 +1,17 @@
+{
+  "name": "foundry-ethernaut-solutions",
+  "version": "0.0.1",
+  "description": "Solution to Ethernaut",
+  "main": "hardhat.config.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^3.3.0"
+  },
+  "devDependencies": {
+    "@openzeppelin/contracts": "^3.3.0"
+  },
+  "author": "Sean Seefried <sean@seefried.com.au>",
+  "license": "MIT"
+}
