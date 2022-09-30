@@ -10,4 +10,4 @@ fi
 
 
 ## Use extra v's e.g. -vvvv to see more detailed logs
-forge test --fork-url "$INFURA_URL" --fork-block-number 11468000 --revert-strings debug -vv
+forge test --fork-url "$INFURA_URL" --fork-block-number 11468000 --revert-strings debug -vv $@
