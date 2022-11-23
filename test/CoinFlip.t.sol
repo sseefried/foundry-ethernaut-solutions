@@ -9,7 +9,8 @@ contract CoinflipSolution is Test {
     using LevelUtils for Vm;
 
     CoinFlip public coinflip;
-    address payable level = 0x4dF32584890A0026e56f7535d0f2C6486753624f;
+    // Get the level address from the web console
+    address payable level = 0x9240670dbd6476e6a32055E52A0b0756abd26fd2;
 
     function setUp() public {
        vm.deal(address(this), 1 ether);

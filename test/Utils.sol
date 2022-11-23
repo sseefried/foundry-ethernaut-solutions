@@ -34,7 +34,9 @@ interface IEthernaut {
 
 library LevelUtils  {
 
-  IEthernaut public constant ethernaut = IEthernaut(0xD991431D8b033ddCb84dAD257f4821E9d5b38C33);
+  // The address here is for the Goerli Test network
+  // See https://goerli.etherscan.io/address/0xD2e5e0102E55a5234379DD796b8c641cd5996Efd
+  IEthernaut public constant ethernaut = IEthernaut(0xD2e5e0102E55a5234379DD796b8c641cd5996Efd);
 
   function createChallenge(Vm vm, address level) external returns (address) {
     vm.recordLogs();
@@ -42,11 +44,11 @@ library LevelUtils  {
     Vm.Log[] memory logs = vm.getRecordedLogs();
     for (uint256 i; i < logs.length; i++) {
       Vm.Log memory log = logs[i];
-      if (keccak256("LevelInstanceCreatedLog(address,address)") == log.topics[0]) {
-        return abi.decode(log.data, (address));
+      if (keccak256("LevelInstanceCreatedLog(address,address,address)") == log.topics[0]) {
+        return address(uint256(log.topics[2]));
       }
     }
-    return address(0); // failed
+    revert("Unable to create level instance");
   }
 
   function isSolved(Vm vm, address payable instance, address payable level) external returns (bool) {
@@ -56,10 +58,14 @@ library LevelUtils  {
     bool solved = false;
     for (uint256 i; i < logs.length; i++) {
       Vm.Log memory log = logs[i];
-      if (keccak256("LevelCompletedLog(address,address)") == log.topics[0]) {
-        bytes memory instanceBytes = abi.encodePacked(log.topics[1]);
-        if (abi.decode(instanceBytes,(address)) == address(this) &&
-            abi.decode(log.data,(address)) == level) {
+      if (keccak256("LevelCompletedLog(address,address,address)") == log.topics[0]) {
+        bytes memory thisBytes = abi.encode(log.topics[1]);
+        bytes memory instanceBytes = abi.encode(log.topics[2]);
+        bytes memory levelBytes = abi.encode(log.topics[3]);
+
+        if (abi.decode(thisBytes,(address)) == address(this) &&
+            payable(abi.decode(instanceBytes,(address))) == instance &&
+            abi.decode(levelBytes,(address)) == level) {
           solved = true;
         }
       }
