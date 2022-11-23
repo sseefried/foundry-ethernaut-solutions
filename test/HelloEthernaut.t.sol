@@ -3,7 +3,6 @@ pragma solidity ^0.7.6;
 
 import "forge-std/Test.sol";
 import "./Utils.sol";
-import "../src/CoinFlip.sol";
 
 interface IHelloEthernaut {
     function password() external returns (string memory);
