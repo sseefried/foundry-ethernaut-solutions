@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.7.6;
+pragma solidity ^0.8.0;
 pragma abicoder v2;
 
 import "forge-std/Test.sol";
@@ -38,14 +38,14 @@ library LevelUtils  {
   // See https://goerli.etherscan.io/address/0xD2e5e0102E55a5234379DD796b8c641cd5996Efd
   IEthernaut public constant ethernaut = IEthernaut(0xD2e5e0102E55a5234379DD796b8c641cd5996Efd);
 
-  function createChallenge(Vm vm, address level) external returns (address) {
+  function createChallenge(Vm vm, address level) external returns (address payable) {
     vm.recordLogs();
     ethernaut.createLevelInstance{value: msg.value}(ILevel(level));
     Vm.Log[] memory logs = vm.getRecordedLogs();
     for (uint256 i; i < logs.length; i++) {
       Vm.Log memory log = logs[i];
       if (keccak256("LevelInstanceCreatedLog(address,address,address)") == log.topics[0]) {
-        return address(uint256(log.topics[2]));
+        return abi.decode(abi.encode(log.topics[2]), (address));
       }
     }
     revert("Unable to create level instance");

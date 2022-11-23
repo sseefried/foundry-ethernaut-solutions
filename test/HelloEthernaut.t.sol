@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.7.6;
+pragma solidity ^0.8.0;
 
 import "forge-std/Test.sol";
 import "./Utils.sol";
@@ -12,7 +12,7 @@ interface IHelloEthernaut {
 contract HelloEthernautSolution is Test {
     using LevelUtils for Vm;
 
-    address payable level = 0xBA97454449c10a0F04297022646E7750b8954EE8;
+    address payable level = payable(0xBA97454449c10a0F04297022646E7750b8954EE8);
     IHelloEthernaut helloEthernaut;
 
     function setUp() public {
