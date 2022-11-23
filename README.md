@@ -1,9 +1,11 @@
 # Ethernaut Solutions
 
+**WARNING**: These solutions only work with Goerli testnet
+
 
 ## Set up `.env`
 
-Paste in your Infura URL for the Rinkeby network into `.env`
+Paste in your Infura URL for the Goerli testnet network into `.env`
 
 See `dot-env-sample`
 
